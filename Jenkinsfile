@@ -1,9 +1,8 @@
 pipeline {
     agent {
         docker {
-          image 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'   // has gcloud + docker
-          args  '-v /var/run/docker.sock:/var/run/docker.sock'    // use host daemon
-          label 'docker'                                          // node must have this label
+            image 'alpine:3.19'
+            args  '-u root'                // run as root to install packages, if needed
         }
     }
       environment {
