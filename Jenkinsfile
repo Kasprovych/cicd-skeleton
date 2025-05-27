@@ -1,10 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
-                sh './mvnw -B -DskipTests clean package'
+              sh '././mvnw test'
             }
         }
+         stage('Build') {
+                    steps {
+                        sh './mvnw -B -DskipTests clean package'
+                    }
+                }
     }
+
 }
