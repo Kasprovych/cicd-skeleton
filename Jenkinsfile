@@ -1,11 +1,10 @@
 pipeline {
-      agent {
-            docker {
-                image 'maven:3.9.9-eclipse-temurin-21'
-                args '-v $HOME/.m2:/root/.m2'
-            }
-      }
-
+    agent {
+        docker {
+            image 'alpine:3.19'
+            args  '-u root'                // run as root to install packages, if needed
+        }
+    }
       environment {
         // Set environment variables for project and cluster
         PROJECT_ID    = 'your-gcp-project-id'
