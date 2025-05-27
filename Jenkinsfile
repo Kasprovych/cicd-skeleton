@@ -1,5 +1,5 @@
 pipeline {
-    agent {
+    agent any {
         docker {
           image 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'   // has gcloud + docker
           args  '-v /var/run/docker.sock:/var/run/docker.sock'    // use host daemon
