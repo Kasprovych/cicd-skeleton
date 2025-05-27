@@ -6,7 +6,7 @@ pipeline {
         GCR_REPO      = "gcr.io/${PROJECT_ID}/springboot-app"  // image repo in GCR
         CLUSTER_NAME  = 'your-gke-cluster'
         CLUSTER_ZONE  = 'us-central1-a'         // or your cluster zone/region
-        GCLOUD_KEY    = credentials('sa.json') 
+        GCLOUD_KEY    = credentials('sa')
         // ^ Jenkins credential (type "Secret file") for the GCP service account JSON
     }
     stages {
