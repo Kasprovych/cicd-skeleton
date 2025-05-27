@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'alpine:3.19'
-            args  '-u root'                // run as root to install packages, if needed
-        }
-    }
+    agent any
       environment {
         // Set environment variables for project and cluster
         PROJECT_ID    = 'your-gcp-project-id'
