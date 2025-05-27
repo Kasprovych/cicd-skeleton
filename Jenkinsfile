@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+          image 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'   // has gcloud + docker
+          args  '-v /var/run/docker.sock:/var/run/docker.sock'    // use host daemon
+          label 'docker'                                          // node must have this label
+        }
+    }
       environment {
         // Set environment variables for project and cluster
         PROJECT_ID    = 'your-gcp-project-id'
@@ -20,6 +26,19 @@ pipeline {
                         sh './mvnw -B -DskipTests clean package'
                     }
                 }
+                   stage('Auth to GCP & GAR') {
+                      steps {
+                        withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
+                          sh '''
+                            # Activate service-account credentials
+                            gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
+
+                            # Teach Docker to use those creds for Artifact Registry
+                            gcloud auth configure-docker central1-docker.pkg.dev --quiet
+                          '''
+                        }
+                      }
+                    }
 
 stage('Build docker Image') {
     steps {
