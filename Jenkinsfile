@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    tools { googleCloudSdk 'gcloud-latest' }
       environment {
         // Set environment variables for project and cluster
         PROJECT_ID    = 'your-gcp-project-id'
