@@ -7,6 +7,7 @@ pipeline {
         CLUSTER_NAME  = 'your-gke-cluster'
         CLUSTER_ZONE  = 'us-central1-a'         // or your cluster zone/region
         GCLOUD_KEY    = credentials('sa')
+        GCLOUD_PATH =  '/Users/rkasprovych/Downloads/google-cloud-sdk/bin'
         // ^ Jenkins credential (type "Secret file") for the GCP service account JSON
     }
     stages {
@@ -25,10 +26,10 @@ pipeline {
                         withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
                           sh '''
                             # Activate service-account credentials
-                            gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
+                            $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
 
                             # Teach Docker to use those creds for Artifact Registry
-                            gcloud auth configure-docker central1-docker.pkg.dev --quiet
+                            $GCLOUD_PATH/gcloud auth configure-docker central1-docker.pkg.dev --quiet
                           '''
                         }
                       }
