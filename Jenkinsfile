@@ -40,7 +40,7 @@ pipeline {
          withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
            sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
            sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
-           sh '$GCLOUD_PATH/gcloud gcloud services enable artifactregistry.googleapis.com'
+           sh '$GCLOUD_PATH/gcloud services enable artifactregistry.googleapis.com'
            sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
 //            sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
            sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
