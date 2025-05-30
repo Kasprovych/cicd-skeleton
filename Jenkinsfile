@@ -40,6 +40,7 @@ pipeline {
         // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
          withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
            sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
+           sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
            sh '$GCLOUD_PATH/gcloud auth configure-docker central1-docker.pkg.dev'
            sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
