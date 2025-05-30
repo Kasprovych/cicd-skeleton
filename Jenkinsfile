@@ -6,7 +6,6 @@ pipeline {
         GCR_REPO      = "gcr.io/${PROJECT_ID}/springboot-app"  // image repo in GCR
         CLUSTER_NAME  = 'your-gke-cluster'
         CLUSTER_ZONE  = 'us-central1-a'         // or your cluster zone/region
-        GCLOUD_KEY    = credentials('sa')
         GCLOUD_PATH =  '/Users/rkasprovych/Downloads/google-cloud-sdk/bin'
         DOCKER_PATH =  '/usr/local/bin'
         // ^ Jenkins credential (type "Secret file") for the GCP service account JSON
@@ -38,7 +37,7 @@ pipeline {
     stage('Build docker Image') {
         steps {
         // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
-         withCredentials() {
+         withCredentials([file(credentialsId: 'sa1', variable: 'GCLOUD_KEY')]) {
            sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
            sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
            sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
