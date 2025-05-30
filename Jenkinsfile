@@ -8,6 +8,7 @@ pipeline {
         CLUSTER_ZONE  = 'us-central1-a'         // or your cluster zone/region
         GCLOUD_KEY    = credentials('sa')
         GCLOUD_PATH =  '/Users/rkasprovych/Downloads/google-cloud-sdk/bin'
+        DOCKER_PATH =  '/usr/local/bin/docker'
         // ^ Jenkins credential (type "Secret file") for the GCP service account JSON
     }
     stages {
@@ -37,7 +38,7 @@ pipeline {
 
     stage('Build docker Image') {
         steps {
-        sh 'docker info'
+        sh '$DOCKER_PATH/docker info'
         // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
 //            sh 'docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
 //            sh 'docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
