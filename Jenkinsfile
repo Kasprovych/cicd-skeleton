@@ -40,7 +40,8 @@ pipeline {
          withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
            sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
            sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
-           sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
+           sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet   #  [oai_citation:2‡Google Cloud](https://cloud.google.com/artifact-registry/docs/docker/authentication?utm_source=chatgpt.com)'
+//            sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
            sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
          }
