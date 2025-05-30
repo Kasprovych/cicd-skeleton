@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as the base image
-FROM openjdk:21-jdk-slim
+FROM openjdk:21-jdk
 
 # Specify the JAR file (produced by Maven) to include in the image
 ARG JAR_FILE=target/*.jar
