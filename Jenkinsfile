@@ -8,7 +8,7 @@ pipeline {
         CLUSTER_ZONE  = 'us-central1-a'         // or your cluster zone/region
         GCLOUD_KEY    = credentials('sa')
         GCLOUD_PATH =  '/Users/rkasprovych/Downloads/google-cloud-sdk/bin'
-        DOCKER_PATH =  '/usr/local/bin/docker'
+        DOCKER_PATH =  '/usr/local/bin'
         // ^ Jenkins credential (type "Secret file") for the GCP service account JSON
     }
     stages {
