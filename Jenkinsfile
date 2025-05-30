@@ -37,9 +37,10 @@ pipeline {
 
     stage('Build docker Image') {
         steps {
+        sh 'docker info'
         // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
-           sh 'docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
-           sh 'docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
+//            sh 'docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
+//            sh 'docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
         }
 }
 
