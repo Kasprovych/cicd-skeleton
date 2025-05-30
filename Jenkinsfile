@@ -37,7 +37,7 @@ pipeline {
     stage('Build docker Image') {
         steps {
         // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
-         withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
+         withCredentials([file(credentialsId: 'sa-artifact', variable: 'GCLOUD_KEY')]) {
            sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
            sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
            sh '$GCLOUD_PATH/gcloud services enable artifactregistry.googleapis.com'
