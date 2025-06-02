@@ -23,7 +23,7 @@ pipeline {
                 }
           stage('Auth to GCP & GAR') {
                 steps {
-                        withCredentials([file(credentialsId: 'sa-register', variable: 'GCLOUD_KEY')]) {
+                        withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
                           sh '''
                             # Activate service-account credentials
                             $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
