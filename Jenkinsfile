@@ -21,6 +21,12 @@ pipeline {
                         sh './mvnw -B -DskipTests clean package'
                     }
                 }
+         stage('Build docker Image') {
+                        steps {
+                           sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
+
+                        }
+                    }
           stage('Auth to GCP & GAR') {
                 steps {
                         withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
@@ -29,22 +35,18 @@ pipeline {
                             $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service-461711"
                             $GCLOUD_PATH/gcloud config set project r-level-booking-service-461711
                             $GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+                            $DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1
                           '''
                         }
                       }
                     }
 
-    stage('Build docker Image') {
-        steps {
-           sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
 
-        }
-    }
-    stage('Push docker Image') {
-        steps {
-            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1'
-        }
-    }
+//     stage('Push docker Image') {
+//         steps {
+//             sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1'
+//         }
+//     }
 
 
   }
