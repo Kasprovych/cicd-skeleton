@@ -21,31 +21,28 @@ pipeline {
                         sh './mvnw -B -DskipTests clean package'
                     }
                 }
-          // stage('Auth to GCP & GAR') {
-          //       steps {
-          //               withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
-          //                 sh '''
-          //                   # Activate service-account credentials
-          //                   $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
-
-
-          //                 '''
-          //               }
-          //             }
-          //           }
+          stage('Auth to GCP & GAR') {
+                steps {
+                        withCredentials([file(credentialsId: 'sa-register', variable: 'GCLOUD_KEY')]) {
+                          sh '''
+                            # Activate service-account credentials
+                            $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
+                            $GCLOUD_PATH/gcloud config set project r-level-booking-service
+                            $GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+                          '''
+                        }
+                      }
+                    }
 
     stage('Build docker Image') {
         steps {
-        // sh "docker login -u _json_key -p \"$(cat $GCLOUD_KEY)\" https://gcr.io"
-         withCredentials([file(credentialsId: 'sa-register', variable: 'GCLOUD_KEY')]) {
-           sh '$GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"'
-           sh '$GCLOUD_PATH/gcloud config set project r-level-booking-service'
-//            sh '$GCLOUD_PATH/gcloud services enable artifactregistry.googleapis.com'
-           sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
-//            sh '$GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet'
            sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
-           sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
-         }
+
+        }
+    }
+    stage('Push docker Image') {
+        steps {
+            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
         }
     }
 
