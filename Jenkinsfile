@@ -36,13 +36,13 @@ pipeline {
 
     stage('Build docker Image') {
         steps {
-           sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
+           sh '$DOCKER_PATH/docker build -t us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1 --platform linux/amd64 .'
 
         }
     }
     stage('Push docker Image') {
         steps {
-            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service/booxiwi-repo/springboot-app:v1'
+            sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1'
         }
     }
 
