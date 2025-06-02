@@ -35,7 +35,6 @@ pipeline {
                             $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service-461711"
                             $GCLOUD_PATH/gcloud config set project r-level-booking-service-461711
                             $GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-                            echo "PATH=/Users/rkasprovych/Downloads/google-cloud-sdk/bin/docker-credential-gcloud"
                             cat $GCLOUD_KEY | $DOCKER_PATH/docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev
                             $DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1"
                           '''
