@@ -26,8 +26,8 @@ pipeline {
                         withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
                           sh '''
                             # Activate service-account credentials
-                            $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service"
-                            $GCLOUD_PATH/gcloud config set project r-level-booking-service
+                            $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service-461711"
+                            $GCLOUD_PATH/gcloud config set project r-level-booking-service-461711
                             $GCLOUD_PATH/gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
                           '''
                         }
