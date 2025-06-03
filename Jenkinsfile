@@ -44,7 +44,12 @@ pipeline {
 
     stage('Deploy to cloud run') {
         steps {
+           withCredentials([file(credentialsId: 'sa', variable: 'GCLOUD_KEY')]) {
             sh '''
+                   # Activate service-account credentials
+                   $GCLOUD_PATH/gcloud auth activate-service-account --key-file="$GCLOUD_KEY" --project="r-level-booking-service-461711"
+                   $GCLOUD_PATH/gcloud config set project r-level-booking-service-461711
+
                    $GCLOUD_PATH/gcloud run deploy test-run \
                      --image="us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1" \
                      --platform=managed \
@@ -54,6 +59,7 @@ pipeline {
                      --region=us-central1 \
                      --timeout=300s
                  '''
+            }
         }
     }
 
