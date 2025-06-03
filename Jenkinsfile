@@ -51,6 +51,7 @@ pipeline {
                      --allow-unauthenticated \
                      --concurrency=40 \
                      --memory=512Mi \
+                     --region=us-central1 \
                      --timeout=300s
                  '''
         }
