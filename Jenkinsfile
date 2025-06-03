@@ -42,11 +42,19 @@ pipeline {
                     }
 
 
-//     stage('Push docker Image') {
-//         steps {
-//             sh '$DOCKER_PATH/docker push us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1'
-//         }
-//     }
+    stage('Deploy to cloud run') {
+        steps {
+            sh '''
+                   $GCLOUD_PATH/gcloud run deploy test-run \
+                     --image="us-central1-docker.pkg.dev/r-level-booking-service-461711/booxiwi-repo/springboot-app:v1" \
+                     --platform=managed \
+                     --allow-unauthenticated \
+                     --concurrency=40 \
+                     --memory=512Mi \
+                     --timeout=300s
+                 '''
+        }
+    }
 
 
   }
